@@ -1,4 +1,5 @@
 import { render, html } from 'lit-html/lib/lit-extended';
+import styles from "./todo-item.css";
 
 export class TodoItem extends HTMLElement {
   set todo(todo) {
@@ -23,8 +24,8 @@ export class TodoItem extends HTMLElement {
   render() {
     if (this.todo) {
       render(html`
-        <div>
-          <span style$="${this.todo.completed ? 'text-decoration: line-through' : ''}">
+        <div class$="${styles.todoItem}">
+          <span class$="${styles.title} ${this.todo.completed ? styles.isCompleted : ''}">
             ${this.todo.title}
           </span>
           <button on-click="${() => this.onClickToggle()}">✓</button>

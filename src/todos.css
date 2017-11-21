@@ -1,0 +1,12 @@
+.todos {
+  max-width: 300px;
+}
+
+.newItemForm {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.titleInput {
+  flex-grow: 1;
+}

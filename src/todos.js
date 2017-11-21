@@ -1,4 +1,5 @@
 import { render, html } from 'lit-html/lib/lit-extended';
+import styles from './todos.css';
 
 export class Todos extends HTMLElement {
   constructor() {
@@ -27,12 +28,14 @@ export class Todos extends HTMLElement {
 
   render() {
     render(html`
-      <h1>Todos</h1>
-      <form on-submit="${(e) => this.onSubmitNewTodoForm(e)}">
-        <input type="text" name="title" />
-        <button type="submit">Add</button>
-      </form>
-      <div>
+      <div class$="${styles.todos}">
+        <h1>Todos</h1>
+
+        <form class$="${styles.newItemForm}" on-submit="${(e) => this.onSubmitNewTodoForm(e)}">
+          <input class$="${styles.titleInput} type="text" name="title" />
+          <button type="submit">Add</button>
+        </form>
+
         ${this.todos.map((todo) => html`
           <dy-todo-item
             todo="${todo}"

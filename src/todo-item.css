@@ -1,0 +1,12 @@
+.todoItem {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.isCompleted {
+  text-decoration: line-through;
+}
