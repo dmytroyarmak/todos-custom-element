@@ -1,5 +1,7 @@
-import { Todos } from './todos';
+import { TodoApp } from './todo-app';
+import { TodoForm } from './todo-form';
 import { TodoItem } from './todo-item'
 
-window.customElements.define('dy-todos', Todos);
-window.customElements.define('dy-todo-item', TodoItem);
+window.customElements.define('todo-app', TodoApp);
+window.customElements.define('todo-form', TodoForm);
+window.customElements.define('todo-item', TodoItem);

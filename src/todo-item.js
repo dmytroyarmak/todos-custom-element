@@ -2,39 +2,44 @@ import { render, html } from 'lit-html/lib/lit-extended';
 import styles from "./todo-item.css";
 
 export class TodoItem extends HTMLElement {
-  set todo(todo) {
-    this._todo = todo;
-    this.invalidate();
+  set title(newTitle) {
+    this.setAttribute('title', newTitle);
   }
 
-  get todo() {
-    return this._todo;
+  get title() {
+    return this.getAttribute('title');
   }
 
-  invalidate() {
-    if (!this._isRendering) {
-      this._isRendering = true;
-      Promise.resolve().then(() => {
-        this.render();
-        this._isRendering = false;
-      })
+  set completed(newCompleted) {
+    if (newCompleted) {
+      this.setAttribute('completed', '');
+    } else {
+      this.removeAttribute('completed');
     }
+  }
+
+  get completed () {
+    return this.hasAttribute('completed');
+  }
+
+  static get observedAttributes() {
+    return ['title', 'completed'];
+  }
+
+  attributeChangedCallback() {
+    this.render();
   }
 
   render() {
-    if (this.todo) {
-      render(html`
-        <div class$="${styles.todoItem}">
-          <span class$="${styles.title} ${this.todo.completed ? styles.isCompleted : ''}">
-            ${this.todo.title}
-          </span>
-          <button on-click="${() => this.onClickToggle()}">✓</button>
-          <button on-click="${() => this.onClickRemove()}">x</button>
-        </div>
-      `, this);
-    } else {
-      this.innerHTML = '';
-    }
+    render(html`
+      <div class$="${styles.todoItem}">
+        <span class$="${styles.title} ${this.completed ? styles.isCompleted : ''}">
+          ${this.title}
+        </span>
+        <button on-click="${() => this.onClickToggle()}">✓</button>
+        <button on-click="${() => this.onClickRemove()}">x</button>
+      </div>
+    `, this);
   }
 
   onClickToggle() {

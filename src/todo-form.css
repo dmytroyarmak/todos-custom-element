@@ -1,8 +1,4 @@
-.todos {
-  max-width: 300px;
-}
-
-.newItemForm {
+.todoForm {
   display: flex;
   margin-bottom: 10px;
 }

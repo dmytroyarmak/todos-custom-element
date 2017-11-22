@@ -1,7 +1,7 @@
 import { render, html } from 'lit-html/lib/lit-extended';
-import styles from './todos.css';
+import styles from './todo-app.css';
 
-export class Todos extends HTMLElement {
+export class TodoApp extends HTMLElement {
   constructor() {
     super();
     this.todos = [];
@@ -9,53 +9,36 @@ export class Todos extends HTMLElement {
 
   set todos(todos) {
     this._todos = todos;
-    this.invalidate();
+    this.render();
   }
 
   get todos() {
     return this._todos;
   }
 
-  invalidate() {
-    if (!this._isRendering) {
-      this._isRendering = true;
-      Promise.resolve().then(() => {
-        this.render();
-        this._isRendering = false;
-      })
-    }
-  }
-
   render() {
     render(html`
-      <div class$="${styles.todos}">
+      <div class$="${styles.todoApp}">
         <h1>Todos</h1>
 
-        <form class$="${styles.newItemForm}" on-submit="${(e) => this.onSubmitNewTodoForm(e)}">
-          <input class$="${styles.titleInput} type="text" name="title" />
-          <button type="submit">Add</button>
-        </form>
+        <todo-form
+          on-add="${(e) => this.addTodo(e.detail.title)}"
+        ></todo-form>
 
         ${this.todos.map((todo) => html`
-          <dy-todo-item
-            todo="${todo}"
+          <todo-item
+            title="${todo.title}"
+            completed="${todo.completed}"
             on-toggle="${() => this.toggleTodo(todo)}"
             on-remove="${() => this.removeTodo(todo)}"
-          ></dy-todo-item>
+          ></todo-item>
         `)}
       </div>
     `, this);
   }
 
-  onSubmitNewTodoForm(e) {
-    e.preventDefault();
-    const form = e.target;
-    const input = form.title;
-    this.addTodo(input.value);
-    input.value = '';
-  }
-
   addTodo(title) {
+    console.log(title);
     this.todos = [
       ...this.todos,
       { title, completed: false }
