@@ -38,7 +38,6 @@ export class TodoApp extends HTMLElement {
   }
 
   addTodo(title) {
-    console.log(title);
     this.todos = [
       ...this.todos,
       { title, completed: false }
